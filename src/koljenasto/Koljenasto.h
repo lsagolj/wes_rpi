@@ -7,8 +7,8 @@ public:
     static unsigned long getKoljLastTime() { return s_KoljTime; }
     static unsigned long getRPM() { 
         return s_FirstReadFlag ? 
-            (60.L * 1000.L * 1000.L) / s_KoljTime : 
-            0.L;
+            (60.UL * 1000.UL * 1000.UL) / s_KoljTime : 
+            0.UL;
     }
 private:
     static bool s_FirstReadFlag;
