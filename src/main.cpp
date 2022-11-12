@@ -1,37 +1,22 @@
 #include <Arduino.h>
-#include <Timer.h>
-#include "var.h"
+#include "koljenasto/Koljenasto.h"
+
+const uint8_t PIN_MAP = A0;  
+const uint8_t PIN_KOLJENASTO = 2;
+const uint8_t PIN_BREAGASTA = 3;
+
+Koljenasto* koljenasto;
 
 void setup() 
 {
-  pinMode(koljeno, INPUT); 	
-  pinMode(A, INPUT); 	
+  pinMode(PIN_MAP, INPUT); 		
+  pinMode(PIN_BREAGASTA, INPUT);
 
-  attachInterrupt(digitalPinToInterrupt(koljeno), rpm, RISING);
+  koljenasto = new Koljenasto(PIN_KOLJENASTO);
+
   Serial.begin(9600);
 }
 
-void loop() 
-{
-  if(minimum)
-  {
-    f_min = 1 / ((float)x / 1000.f / 1000.f);               //Pretvaranje iz vremena u frekvenciju
-    Serial.println(f_min);                                  //Printanje frekvencije
-  }
-}
-
-void rpm()
-{
-  if(timer.state() != RUNNING && counter == 22)       //Ako tajmer nije pokrenut, no brojimo samo svaki 22 rise
-  {
-    counter = 0;
-    timer.start();
-  }
-  else if(timer.state() == RUNNING)
-  {
-    timer.pause();
-    x = timer.read();
-    minimum = true;
-  }
-  counter++;
+void loop() {
+  Serial.println(koljenasto->getRPM());
 }
