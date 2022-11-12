@@ -21,6 +21,6 @@ void setup()
 }
 
 void loop() {
-  //Serial.println(koljenasto->getRPM());
-  Serial.println(mapSensor->getPressure());
+  Serial.println(koljenasto->getRPM());
+  //Serial.println(mapSensor->getPressure());
 }
