@@ -1,24 +1,27 @@
 #include <Arduino.h>
+#include <Timer.h>
 
-const int INPUT_KOLJ = 5;
+  const int A = A0;  
+  const int koljeno = 5;
 
-int counter = 0;
-int prev = -1;
+  int ulaz = 0;
+  int koljeno_val;
+  int last_val = 0;
+  float napon = 0;
+  long int proslo_vrijeme = 0;
 
-unsigned long prev_time = micros();
+Timer timer(MICROS);
 
-void setup()  {
-  pinMode(INPUT_KOLJ, INPUT);
-  Serial.begin(9600);
+void rpm();
+
+void setup() 
+{
+   Serial.begin(9600);
 }
 
-void loop() {
-  int val = digitalRead(INPUT_KOLJ);
-  if (val == 1 && prev == 0) {
-    unsigned long speed = micros() - prev_time;
-    //Serial.println(speed);
-    prev_time = micros();
-  }
-  Serial.println(val);
-  prev = val;
+void loop() 
+{
+  Serial.print("Test");
+
+  delay(100);
 }
