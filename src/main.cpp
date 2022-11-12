@@ -7,11 +7,16 @@ const int koljeno = 2;
 int ulaz = 0;
 int koljeno_val;
 int last_val = 0;
+int counter = 0;
+
 float f_min;
 float napon = 0;
+
 uint32_t proslo_vrijeme = 0;
+uint32_t x = 0;
 
 Timer timer(MICROS);
+Timer bounce(MICROS);
 
 void rpm();
 
@@ -28,30 +33,21 @@ void setup()
 
 void loop() 
 {
-  /*ulaz = analogRead(A);
-  napon = ((float)ulaz / 1023.f) * 5.f;*/
-  //koljeno_val = digitalRead(koljeno);
+  f_min = 1 / ((float)x / 1000.f / 1000.f);               //Pretvaranje iz vremena u frekvenciju
+  Serial.println(f_min);                                  //Printanje frekvencije
 
-  //Serial.print("a");
 }
 
 void rpm()
 {
-  if(timer.state() != RUNNING)
+  if(timer.state() != RUNNING && counter % 10 == 0)       //Ako tajmer nije pokrenut, no brojimo samo svaki 10 rise
   {
     timer.start();
   }
   else
   {
-    timer.stop();
-    uint32_t x = (timer.read() * 1000 *1000 * 60);
-    f_min = 60.f / (float)x;
-
-    Serial.println(f_min);
-
-
-
-    proslo_vrijeme = timer.read();
+    timer.pause();
+    x = timer.read();
   }
-  //Serial.print("n");
+  counter++;
 }
