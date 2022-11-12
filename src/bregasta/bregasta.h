@@ -17,5 +17,5 @@ private:
     static uint32_t s_BregastaCounter;
     static void interrupt_citaj_Bregasta();
 
-    uint8_t PIN_Bregasta;
+    uint8_t PIN_BREGASTA;
 };
