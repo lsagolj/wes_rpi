@@ -1,13 +1,18 @@
 #include <Arduino.h>
-
+#include <Timer.h>
 
   const int A = A0;  
   const int koljeno = 5;
 
   int ulaz = 0;
   int koljeno_val;
-  int last_val;
+  int last_val = 0;
   float napon = 0;
+  long int proslo_vrijeme = 0;
+
+Timer timer(MICROS);
+
+void rpm();
 
 void setup() 
 {
@@ -33,9 +38,34 @@ void loop()
   Serial.print(koljeno_val);
   Serial.print("\n");*/
 
-  if(koljeno_val == 1)
+  /*if(koljeno_val == 1)
   {
-    if(last_val == 1)
-  }
+    if(last_val != 1)
+      {
+        if(timer.state() != RUNNING)
+          {
+            timer.start();
+          }
+          else{
+            rpm();
+            timer.stop();
+            last_val = 0;
+          }
+
+
+        
+      }
+  }*/
+
+}
+
+void rpm()
+{
+  int ciklus = timer.read() - proslo_vrijeme;
+  float frekvencija = 1 / (ciklus * 1000000);
+
+  proslo_vrijeme = timer.read();
+
+  Serial.print(frekvencija);
 
 }
