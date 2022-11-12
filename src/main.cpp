@@ -1,71 +1,37 @@
 #include <Arduino.h>
 #include <Timer.h>
-
-  const int A = A0;  
-  const int koljeno = 5;
-
-  int ulaz = 0;
-  int koljeno_val;
-  int last_val = 0;
-  float napon = 0;
-  long int proslo_vrijeme = 0;
-
-Timer timer(MICROS);
-
-void rpm();
+#include "var.h"
 
 void setup() 
 {
   pinMode(koljeno, INPUT); 	
   pinMode(A, INPUT); 	
+
+  attachInterrupt(digitalPinToInterrupt(koljeno), rpm, RISING);
   Serial.begin(9600);
 }
 
 void loop() 
 {
-  ulaz = analogRead(A);
-  napon = ((float)ulaz / 1023.f) * 5.f;
-  koljeno_val = digitalRead(koljeno);
-
-
-  /*Serial.print(ulaz); //Printanje pina 9 (pwm)
-  Serial.print("\n");
-  Serial.print("Napon: ");
-  Serial.print(napon);
-  Serial.print("\n");
-
-  Serial.print("Koljeno: ");  //Printanje pina 5 
-  Serial.print(koljeno_val);
-  Serial.print("\n");*/
-
-  /*if(koljeno_val == 1)
+  if(minimum)
   {
-    if(last_val != 1)
-      {
-        if(timer.state() != RUNNING)
-          {
-            timer.start();
-          }
-          else{
-            rpm();
-            timer.stop();
-            last_val = 0;
-          }
-
-
-        
-      }
-  }*/
-
+    f_min = 1 / ((float)x / 1000.f / 1000.f);               //Pretvaranje iz vremena u frekvenciju
+    Serial.println(f_min);                                  //Printanje frekvencije
+  }
 }
 
 void rpm()
 {
-  int ciklus = timer.read() - proslo_vrijeme;
-  float frekvencija = 1 / (ciklus * 1000000);
-
-  proslo_vrijeme = timer.read();
-
-  Serial.print(frekvencija);
-
+  if(timer.state() != RUNNING && counter == 22)       //Ako tajmer nije pokrenut, no brojimo samo svaki 22 rise
+  {
+    counter = 0;
+    timer.start();
+  }
+  else if(timer.state() == RUNNING)
+  {
+    timer.pause();
+    x = timer.read();
+    minimum = true;
+  }
+  counter++;
 }
