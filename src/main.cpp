@@ -1,27 +1,39 @@
 #include <Arduino.h>
-#include <Timer.h>
 
-  const int A = A0;  
-  const int koljeno = 5;
+const uint8_t PIN_MAP = A0;  
+const uint8_t PIN_KOLJENASTO = 2;
+const uint8_t PIN_BREAGASTA = 3;
 
-  int ulaz = 0;
-  int koljeno_val;
-  int last_val = 0;
-  float napon = 0;
-  long int proslo_vrijeme = 0;
+unsigned long l_time = 0;
+unsigned long kolj_time;
+uint32_t kolj_counter = -1;
 
-Timer timer(MICROS);
+unsigned long kolj_last_time;
 
-void rpm();
+void printaj() {
+  Serial.print(kolj_counter);
+  Serial.print(" ");
+  Serial.println(kolj_time);
+}
+
+void interrupt_citaj_koljenasto() {
+  if (kolj_counter % 22 == 10) {
+    kolj_time = micros() - l_time;
+    l_time = micros();
+  }
+  kolj_counter++;
+}
 
 void setup() 
 {
-   Serial.begin(9600);
+  pinMode(PIN_MAP, INPUT); 	
+  pinMode(PIN_KOLJENASTO, INPUT); 	
+  pinMode(PIN_BREAGASTA, INPUT);
+  attachInterrupt(digitalPinToInterrupt(PIN_KOLJENASTO), interrupt_citaj_koljenasto, RISING);
+
+  Serial.begin(9600);
 }
 
-void loop() 
-{
-  Serial.print("Test");
-
-  delay(100);
+void loop() {
+  Serial.println(kolj_time);
 }
