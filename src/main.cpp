@@ -1,26 +1,6 @@
 #include <Arduino.h>
 #include <Timer.h>
-
-const int A = A0;  
-const int koljeno = 2;
-
-int ulaz = 0;
-int koljeno_val;
-int last_val = 0;
-int counter = 0;
-
-float f_min;
-float napon = 0;
-
-uint32_t proslo_vrijeme = 0;
-uint32_t x = 0;
-
-bool minimum = false;
-
-Timer timer(MICROS);
-Timer bounce(MICROS);
-
-void rpm();
+#include "var.h"
 
 void setup() 
 {
@@ -28,8 +8,6 @@ void setup()
   pinMode(A, INPUT); 	
 
   attachInterrupt(digitalPinToInterrupt(koljeno), rpm, RISING);
-
-
   Serial.begin(9600);
 }
 
@@ -40,8 +18,6 @@ void loop()
     f_min = 1 / ((float)x / 1000.f / 1000.f);               //Pretvaranje iz vremena u frekvenciju
     Serial.println(f_min);                                  //Printanje frekvencije
   }
-
-
 }
 
 void rpm()
