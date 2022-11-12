@@ -15,6 +15,8 @@ float napon = 0;
 uint32_t proslo_vrijeme = 0;
 uint32_t x = 0;
 
+bool minimum = false;
+
 Timer timer(MICROS);
 Timer bounce(MICROS);
 
@@ -33,21 +35,27 @@ void setup()
 
 void loop() 
 {
-  f_min = 1 / ((float)x / 1000.f / 1000.f);               //Pretvaranje iz vremena u frekvenciju
-  Serial.println(f_min);                                  //Printanje frekvencije
+  if(minimum)
+  {
+    f_min = 1 / ((float)x / 1000.f / 1000.f);               //Pretvaranje iz vremena u frekvenciju
+    Serial.println(f_min);                                  //Printanje frekvencije
+  }
+
 
 }
 
 void rpm()
 {
-  if(timer.state() != RUNNING && counter % 10 == 0)       //Ako tajmer nije pokrenut, no brojimo samo svaki 10 rise
+  if(timer.state() != RUNNING && counter == 22)       //Ako tajmer nije pokrenut, no brojimo samo svaki 22 rise
   {
+    counter = 0;
     timer.start();
   }
-  else
+  else if(timer.state() == RUNNING)
   {
     timer.pause();
     x = timer.read();
+    minimum = true;
   }
   counter++;
 }
