@@ -14,15 +14,18 @@ MapSensor* mapSensor;
 Bobina* bobina;
 
 void setup() {
+  cli();
   koljenasto = new Koljenasto(PIN_KOLJENASTO);
   bregasta = new Bregasta(PIN_BREGASTA);
   mapSensor = new MapSensor(PIN_MAP);
   bobina = new Bobina();
   Serial.begin(9600);
+  sei();
 }
 
 void loop() {
   //Serial.println(koljenasto->getPinDeltaTime());
+  
   Serial.println(bobina->getAngle(mapSensor->getPressure(), koljenasto->getRPM()));
   Serial.println(mapSensor->getPressure());
   Serial.println(koljenasto->getRPM());
