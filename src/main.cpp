@@ -1,4 +1,5 @@
 #include <Arduino.h>
+
 #include "koljenasto/Koljenasto.h"
 #include "map/MapSensor.h"
 #include "bregasta/bregasta.h"
@@ -19,11 +20,13 @@ void setup() {
   bregasta = new Bregasta(PIN_BREGASTA);
   mapSensor = new MapSensor(PIN_MAP);
   bobina = new Bobina();
+  
   Serial.begin(9600);
   sei();
 }
 
 void loop() {
+
   //Serial.println(koljenasto->getPinDeltaTime());
   
   /*Serial.println(bobina->getAngle(mapSensor->getPressure(), koljenasto->getRPM()));
