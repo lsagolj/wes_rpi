@@ -65,3 +65,14 @@ uint32_t Bobina::getPaInt(uint32_t pressure) {
         return 9;
     }
 }
+
+uint32_t Bobina::sendPulse() {
+
+    //digitalWrite(7, 1);         //Stavlja pin 7 u val 1
+    Serial.println("Nabijam se");
+    delayMicroseconds(1500);    //Necmo irl koristiti delay al ovo tek tolko da vidimo kako radi
+
+
+
+    
+}

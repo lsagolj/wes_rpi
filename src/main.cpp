@@ -26,10 +26,14 @@ void setup() {
 void loop() {
   //Serial.println(koljenasto->getPinDeltaTime());
   
-  Serial.println(bobina->getAngle(mapSensor->getPressure(), koljenasto->getRPM()));
+  /*Serial.println(bobina->getAngle(mapSensor->getPressure(), koljenasto->getRPM()));
   Serial.println(mapSensor->getPressure());
   Serial.println(koljenasto->getRPM());
 
-  Serial.print("\n");
+  Serial.print("\n");*/
   //Serial.println(mapSensor->getPressure());
+
+  if(bregasta->s_BregastaCounter == 3 || bregasta->s_BregastaCounter == 6)
+    bobina->sendPulse();
+
 }

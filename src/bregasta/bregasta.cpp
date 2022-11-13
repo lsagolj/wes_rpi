@@ -12,7 +12,7 @@ Bregasta::Bregasta(uint8_t pin) : PIN_BREGASTA(pin) {
 }
 
 void Bregasta::interrupt_citaj_Bregasta() {
-    if (s_BregastaCounter > 0) {
+    if (s_BregastaCounter > -1) {
         s_FirstReadFlag = true;
         s_BregastaTime = micros() - s_LTime;
         s_LTime = micros();
