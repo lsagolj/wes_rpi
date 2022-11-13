@@ -57,7 +57,9 @@ void loop() {
     timeThatShouldFire = timeTillGMT - angle * pinDeltaTime  / 15;
     timeThatShouldStartFiring = timeThatShouldFire - 1500;
 
-    
+    Serial.print(timeThatShouldStartFiring);
+    Serial.print(" ");
+    Serial.println(timeThatShouldFire);
 
     timerStartFiring.start();
     timerFire.start();
