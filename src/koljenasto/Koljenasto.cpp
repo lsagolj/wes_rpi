@@ -17,25 +17,27 @@ Koljenasto::Koljenasto(uint8_t pin) : PIN_KOLJENASTO(pin) {
 
 void Koljenasto::interrupt_citaj_koljenasto() {
     unsigned long currTime = micros();
+    if (s_FirstFlag) {
+        s_LastReadTime = currTime;
+        s_CurrGMTDeltaTime = 0.0;
+        s_LastGMTReadTime = currTime;
+        s_PinCounter = 0;
+        s_FirstFlag = false;
+    }
 
     s_CurrDeltaTime = currTime - s_LastReadTime;
     
+    
 
     // Ako je vremenski razmak oko 2 pina onda smo na 1. pinu
-    if (s_CurrDeltaTime > s_LastDeltaTime * 2) {
+    if (s_CurrDeltaTime > s_LastDeltaTime * 2.5) {
         s_CurrGMTDeltaTime = currTime - s_LastGMTReadTime;
         s_LastGMTReadTime = currTime;
         s_PinCounter = 0;
     }
 
     // Ako je prvi put program pokrenut
-    if (s_FirstFlag) {
-        s_LastReadTime = currTime;
-        s_CurrGMTDeltaTime = 0.0;
-        s_LastGMTReadTime = currTime;
-        s_FirstFlag = false;
-        s_PinCounter = 0;
-    }
+    
 
     s_LastReadTime = currTime;
     
