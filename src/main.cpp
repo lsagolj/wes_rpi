@@ -1,35 +1,39 @@
 #include <Arduino.h>
-#include <Timer.h>
 
 #include "koljenasto/Koljenasto.h"
 #include "map/MapSensor.h"
 #include "bregasta/bregasta.h"
-//#include "bobina/bobina.h"
+#include "bobina/Bobina.h"
 
-const uint8_t PIN_MAP         = A0;  
-const uint8_t PIN_KOLJENASTO  = 2;
-const uint8_t PIN_BREGASTA    = 3;
-const uint8_t PIN_BOBINA      = 7;         //Output
+const uint8_t PIN_MAP = A0;  
+const uint8_t PIN_KOLJENASTO = 2;
+const uint8_t PIN_BREGASTA = 3;
 
 Koljenasto* koljenasto;
-Bregasta*   bregasta;
-MapSensor*  mapSensor;
-//Bobina*     bobina;
+Bregasta* bregasta;
+MapSensor* mapSensor;
+Bobina* bobina;
 
-Timer t_bobina;
-void setup() 
-{
-  koljenasto   = new Koljenasto(PIN_KOLJENASTO);
-  bregasta     = new Bregasta(PIN_BREGASTA);
-  mapSensor    = new MapSensor(PIN_MAP);
-  //bobina       = new Bobina(PIN_BOBINA);
-
+void setup() {
+  cli();
+  koljenasto = new Koljenasto(PIN_KOLJENASTO);
+  bregasta = new Bregasta(PIN_BREGASTA);
+  mapSensor = new MapSensor(PIN_MAP);
+  bobina = new Bobina();
+  
   Serial.begin(9600);
+  sei();
 }
 
 void loop() {
-  Serial.println(koljenasto->getRPM());
-  Serial.println(bregasta->getRPM());
+
+  //Serial.println(koljenasto->getPinDeltaTime());
+  
+  Serial.println(bobina->getAngle(mapSensor->getPressure(), koljenasto->getRPM()));
   Serial.println(mapSensor->getPressure());
+  Serial.println(koljenasto->getRPM());
+
   Serial.print("\n");
+  //Serial.println(mapSensor->getPressure());
+
 }
