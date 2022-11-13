@@ -12,11 +12,14 @@ public:
     }
 
     static uint32_t s_BregastaCounter;
+    static bool s_IsActivated;
     
 private:
     static bool s_FirstReadFlag;
     static unsigned long s_LTime;
     static unsigned long s_BregastaTime;
+
+    
     
     static void interrupt_citaj_Bregasta();
 

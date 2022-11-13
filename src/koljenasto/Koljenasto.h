@@ -5,6 +5,7 @@ class Koljenasto {
 public:
     Koljenasto(uint8_t pin);
     static unsigned long getPinDeltaTime() { return s_CurrDeltaTime; }
+    static unsigned long getPinLastPosReadTime() { return s_LastReadTime; }
     static unsigned long getKoljLastTime() { return s_CurrGMTDeltaTime; }
     static unsigned long getRPM() { 
         return (60.0 * 1000.0 * 1000.0) / s_CurrGMTDeltaTime;
