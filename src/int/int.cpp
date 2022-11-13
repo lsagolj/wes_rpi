@@ -17,5 +17,5 @@ void Inter::sendPulse()
 
 void Inter::pucajIskru() 
 {
-
+    Serial.println("a00");
 }
