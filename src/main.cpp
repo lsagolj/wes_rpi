@@ -19,6 +19,8 @@ Bobina*     bobina;
 //Inter*      inter;
 
 //Timer timer;
+Timer timerStartFiring(MICROS);
+Timer timerFire(MICROS);
 
 unsigned long timeThatShouldFire = 0;
 unsigned long timeThatShouldStartFiring = 0;
@@ -45,27 +47,34 @@ void loop() {
   //Serial.println(mapSensor->getPressure());
   if (bregasta->s_IsActivated) {
     unsigned long pinDeltaTime = koljenasto->getPinDeltaTime();
+    //Serial.println(pinDeltaTime);
     unsigned long angle = bobina->getAngle(mapSensor->getPressure(), koljenasto->getRPM());
 
     unsigned long timeTillFirstPin = pinDeltaTime * 3 - (currTime - koljenasto->getPinLastPosReadTime());
     unsigned long timeTillGMT = timeTillFirstPin + pinDeltaTime * 9;
-    timeThatShouldFire = timeTillGMT - pinDeltaTime * ((double)angle / 15.0);
+    timeThatShouldFire = timeTillGMT - angle * pinDeltaTime  / 15;
     timeThatShouldStartFiring = timeThatShouldFire - 1500;
 
-    timeThatShouldFire += currTime;
-    timeThatShouldStartFiring += currTime;
+    Serial.print(timeThatShouldStartFiring);
+    Serial.print(" ");
+    Serial.println(timeThatShouldFire);
+
+    timerStartFiring.start();
+    timerFire.start();
 
     bregasta->s_IsActivated = false;
   }
 
-  if (currTime > timeThatShouldStartFiring) {
-    timeThatShouldStartFiring = 0;
+  if (timerStartFiring.state() == RUNNING && timerStartFiring.read() > timeThatShouldStartFiring) {
+    timerStartFiring.stop();
     digitalWrite(PIN_INT, HIGH);
+    Serial.println("START FIRING");
   }
 
-  if (currTime > timeThatShouldFire) {
-    timeThatShouldFire = 0;
+  if (timerFire.state() == RUNNING && timerFire.read() > timeThatShouldFire) {
+    timerFire.stop();
     digitalWrite(PIN_INT, LOW);
+    Serial.println("FIRE");
   }
 
 

@@ -17,7 +17,6 @@ Koljenasto::Koljenasto(uint8_t pin) : PIN_KOLJENASTO(pin) {
 
 void Koljenasto::interrupt_citaj_koljenasto() {
     unsigned long currTime = micros();
-
     if (s_FirstFlag) {
         s_LastReadTime = currTime;
         s_CurrGMTDeltaTime = 0.0;
@@ -27,6 +26,7 @@ void Koljenasto::interrupt_citaj_koljenasto() {
     }
 
     s_CurrDeltaTime = currTime - s_LastReadTime;
+    
     
 
     // Ako je vremenski razmak oko 2 pina onda smo na 1. pinu
