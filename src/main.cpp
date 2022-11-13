@@ -42,7 +42,7 @@ void loop() {
   //Serial.println(mapSensor->getPressure());
 
   //Kod koji odreduje koliko ranije krenuti puniti bobinu
-  if(timer.state() != RUNNING)
+  if(timer.state() != RUNNING)    //Ovo je samo simulacija inputa
   {
     timer.start();
     digitalWrite(PIN_INT, 1);
