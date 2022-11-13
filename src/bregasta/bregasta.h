@@ -7,7 +7,7 @@ public:
     static unsigned long getBregastaLastTime() { return s_BregastaTime; }
     static unsigned long getRPM() { 
         return s_FirstReadFlag ? 
-            (60.L * 1000.L * 1000.L) / s_BregastaTime : 
+            (((60.L * 1000.L * 1000.L) / s_BregastaTime) * 2) : 
             0.L;
     }
 private:
