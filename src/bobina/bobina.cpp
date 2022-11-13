@@ -1,6 +1,7 @@
 #include "bobina.h"
+#include "koljenasto/Koljenasto.h"
 
-Bobina::Bobina(uint8_t pin) : PIN_BOBINA(pin) 
-{    
-    pinMode(PIN_BOBINA, OUTPUT); 
-}
+/*Serial.println(koljenasto->getRPM());
+  Serial.println(bregasta->getRPM());
+  Serial.println(mapSensor->getPressure());*/
+

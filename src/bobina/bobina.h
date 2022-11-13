@@ -1,10 +1,13 @@
 #pragma once
 #include <Arduino.h>
 
-class Bobina {
-public:
-    Bobina(uint8_t pin);
+#define punjenje_us 1500 //Trajanje od 1.5 ms
 
-private:
-    uint8_t PIN_BOBINA;
-};
+
+unsigned long s_LastReadTime;
+unsigned long s_CurrDeltaTime;
+unsigned long s_LastDeltaTime;
+
+
+
+void saljiBobinu();
