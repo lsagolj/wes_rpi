@@ -22,6 +22,8 @@ Bobina*     bobina;
 Timer timerStartFiring(MICROS);
 Timer timerFire(MICROS);
 
+
+
 unsigned long timeThatShouldFire = 0;
 unsigned long timeThatShouldStartFiring = 0;
 
@@ -55,12 +57,11 @@ void loop() {
     timeThatShouldFire = timeTillGMT - angle * pinDeltaTime  / 15;
     timeThatShouldStartFiring = timeThatShouldFire - 1500;
 
-    Serial.print(timeThatShouldStartFiring);
-    Serial.print(" ");
-    Serial.println(timeThatShouldFire);
+    
 
     timerStartFiring.start();
     timerFire.start();
+      
 
     bregasta->s_IsActivated = false;
   }
